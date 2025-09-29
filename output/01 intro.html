@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <title>01 intro</title>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^5/dist/reveal.css"/>
+    <style type="text/css">code{white-space: pre;}.reveal pre code {max-height:30vh;overflow-y:auto;display: block;}</style>
+    <link rel="stylesheet" href="https://unpkg.com/reveal.js@^5/dist/theme/black.css" id="theme">
+
+
+    <!-- For syntax highlighting using highlight.js-->
+    <link rel="stylesheet" href="./revealjs/highlight/atom-one-dark.css">
+
+  <!-- <link rel="stylesheet" media="print" href="https://unpkg.com/reveal.js@^5/css/print/pdf.css" /> -->
+  <!--[if lt IE 9]>
+  <script src="https://unpkg.com/reveal.js@^5/lib/js/html5shiv.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+
+<section id="rust-lesson-1" class="slide level1">
+<h1>Rust Lesson 1</h1>
+<h2 id="intro-to-rust-programming">Intro to Rust Programming</h2>
+</section>
+<section id="functions" class="slide level1">
+<h1>Functions</h1>
+<ul>
+<li>Functions are declared with <code>fn</code></li>
+<li>Parameters must be typed</li>
+<li>The return type is declared with <code>-&gt;</code></li>
+</ul>
+<pre class="rust"><code>fn add(x: i32, y: i32) -&gt; i32 {
+    x + y
+}
+
+fn main() {
+    let sum = add(2, 3);
+    println!(&quot;Sum is {}&quot;, sum);
+}</code></pre>
+</section>
+<section id="expression-based-language" class="slide level1">
+<h1>Expression-Based Language</h1>
+<ul>
+<li>Rust is expression-oriented</li>
+<li>Most things return a value</li>
+<li>No semicolon → value is returned</li>
+</ul>
+<pre class="rust"><code>fn square(x: i32) -&gt; i32 {
+    x * x  // no semicolon → expression result
+}
+
+fn main() {
+    let y = {
+        let temp = 5;
+        temp + 1  // block returns 6
+    };
+    println!(&quot;{}&quot;, y);
+}</code></pre>
+</section>
+<section id="macros" class="slide level1">
+<h1>Macros</h1>
+<ul>
+<li>Macros look like functions but end with <code>!</code></li>
+<li>They generate code at compile time</li>
+<li>Example: <code>println!</code> is a macro</li>
+</ul>
+<pre class="rust"><code>fn main() {
+    println!(&quot;Hello, world!&quot;); // macro, not function
+}</code></pre>
+<ul>
+<li>Useful for:
+<ul>
+<li>Debugging (<code>dbg!</code>)</li>
+<li>Code generation (<code>vec!</code>, <code>format!</code>)</li>
+</ul></li>
+</ul>
+</section>
+<section id="struct-vs-class-13" class="slide level1">
+<h1>Struct vs Class (1/3)</h1>
+<ul>
+<li>Rust does <strong>not</strong> have classes</li>
+<li>Instead: <strong>structs</strong> for data, <strong>impl
+blocks</strong> for methods</li>
+<li>No inheritance → use traits instead</li>
+</ul>
+<pre class="rust"><code>// Named-field struct
+struct Point {
+    x: f64,
+    y: f64,
+}
+
+fn main() {
+    let p = Point { x: 3.0, y: 4.0 };
+    println!(&quot;Point({}, {})&quot;, p.x, p.y);
+}</code></pre>
+</section>
+<section id="struct-vs-class-23" class="slide level1">
+<h1>Struct vs Class (2/3)</h1>
+<ul>
+<li>Tuple structs: unnamed fields, accessed by index</li>
+</ul>
+<pre class="rust"><code>struct Color(u8, u8, u8);
+
+fn main() {
+    let red = Color(255, 0, 0);
+    println!(&quot;({}, {}, {})&quot;, red.0, red.1, red.2);
+}</code></pre>
+</section>
+<section id="struct-vs-class-33" class="slide level1">
+<h1>Struct vs Class (3/3)</h1>
+<ul>
+<li>Unit structs: no fields at all</li>
+<li>Often used as markers or for traits</li>
+</ul>
+<pre class="rust"><code>struct Marker;
+
+fn main() {
+    let _m = Marker;
+}</code></pre>
+</section>
+<section id="impl-blocks" class="slide level1">
+<h1>Impl Blocks</h1>
+<ul>
+<li>Attach methods to structs with <code>impl</code></li>
+</ul>
+<pre class="rust"><code>struct Point {
+    x: f64,
+    y: f64,
+}
+
+impl Point {
+    fn distance(&amp;self) -&gt; f64 {
+        (self.x.powi(2) + self.y.powi(2)).sqrt()
+    }
+}
+
+fn main() {
+    let p = Point { x: 3.0, y: 4.0 };
+    println!(&quot;{}&quot;, p.distance());
+}</code></pre>
+</section>
+<section id="traits" class="slide level1">
+<h1>Traits</h1>
+<ul>
+<li>Traits = interfaces</li>
+<li>Define shared behavior</li>
+<li>Types implement traits with <code>impl Trait for Type</code></li>
+</ul>
+<pre class="rust"><code>trait Speak {
+    fn speak(&amp;self);
+}
+
+struct Dog;
+
+impl Speak for Dog {
+    fn speak(&amp;self) {
+        println!(&quot;Woof!&quot;);
+    }
+}</code></pre>
+</section>
+<section id="enums-12" class="slide level1">
+<h1>Enums (1/2)</h1>
+<ul>
+<li>Enums let you define <strong>multiple possible
+variants</strong></li>
+<li>Variants can store values</li>
+</ul>
+<pre class="rust"><code>enum Direction {
+    Up,
+    Down,
+    Left,
+    Right,
+}</code></pre>
+</section>
+<section id="enums-22" class="slide level1">
+<h1>Enums (2/2)</h1>
+<ul>
+<li>Variants can carry <strong>different data</strong></li>
+</ul>
+<pre class="rust"><code>enum Message {
+    Quit,                     // no data
+    Write(String),            // one piece of data
+    Move { x: i32, y: i32 },  // named fields
+}
+
+fn handle(msg: Message) {
+    match msg {
+        Message::Quit =&gt; println!(&quot;Quit&quot;),
+        Message::Write(text) =&gt; println!(&quot;Text: {}&quot;, text),
+        Message::Move { x, y } =&gt; println!(&quot;Move to ({}, {})&quot;, x, y),
+    }
+}</code></pre>
+</section>
+<section id="ownership-14" class="slide level1">
+<h1>Ownership (1/4)</h1>
+<ul>
+<li>Rust’s core feature: <strong>memory safety without GC</strong></li>
+<li>Every value has a <strong>single owner</strong></li>
+<li>When the owner goes out of scope, the value is dropped</li>
+</ul>
+<pre class="rust"><code>fn main() {
+    let s = String::from(&quot;hello&quot;);
+    println!(&quot;{}&quot;, s);
+} // s is freed here</code></pre>
+</section>
+<section id="ownership-24-move-semantics" class="slide level1">
+<h1>Ownership (2/4) – Move Semantics</h1>
+<ul>
+<li>Assignment or passing a variable <strong>moves</strong>
+ownership</li>
+<li>After a move, the old variable cannot be used</li>
+</ul>
+<pre class="rust"><code>fn main() {
+    let s1 = String::from(&quot;hello&quot;);
+    let s2 = s1;  // ownership moved
+    // println!(&quot;{}&quot;, s1); // ❌ error: s1 no longer valid
+    println!(&quot;{}&quot;, s2);
+}</code></pre>
+</section>
+<section id="ownership-34-borrowing" class="slide level1">
+<h1>Ownership (3/4) – Borrowing</h1>
+<ul>
+<li>Instead of moving, you can <strong>borrow</strong> with
+references</li>
+<li>Immutable borrow: <code>&amp;T</code><br />
+</li>
+<li>Multiple immutable borrows allowed</li>
+</ul>
+<pre class="rust"><code>fn print_len(s: &amp;String) {
+    println!(&quot;Length is {}&quot;, s.len());
+}
+
+fn main() {
+    let s = String::from(&quot;hello&quot;);
+    print_len(&amp;s);  // borrow
+    println!(&quot;{}&quot;, s); // still valid
+}</code></pre>
+</section>
+<section id="ownership-44-mutable-borrowing" class="slide level1">
+<h1>Ownership (4/4) – Mutable Borrowing</h1>
+<ul>
+<li>At most <strong>one mutable borrow</strong> at a time</li>
+<li>Prevents data races at compile time</li>
+</ul>
+<pre class="rust"><code>fn add_exclamation(s: &amp;mut String) {
+    s.push(&#39;!&#39;);
+}
+
+fn main() {
+    let mut s = String::from(&quot;hello&quot;);
+    add_exclamation(&amp;mut s);
+    println!(&quot;{}&quot;, s);
+}</code></pre>
+</section>
+<section id="rusts-greatness" class="slide level1">
+<h1>Rust’s Greatness</h1>
+<ul>
+<li>Rust is designed for <strong>reliability and safety</strong></li>
+<li>Key guarantees:
+<ul>
+<li><strong>No null pointers</strong></li>
+<li><strong>No unchecked exceptions</strong></li>
+<li><strong>No data races</strong></li>
+<li><strong>No use-after-free</strong></li>
+</ul></li>
+</ul>
+</section>
+<section id="no-null-optiont" class="slide level1">
+<h1>No Null – <code>Option&lt;T&gt;</code></h1>
+<ul>
+<li>In Rust, there is no <code>null</code></li>
+<li>Instead, optional values use the <code>Option&lt;T&gt;</code>
+type</li>
+</ul>
+<pre class="rust"><code>fn find_user(id: u32) -&gt; Option&lt;String&gt; {
+    if id == 1 {
+        Some(String::from(&quot;Alice&quot;))
+    } else {
+        None
+    }
+}
+
+fn main() {
+    match find_user(1) {
+        Some(name) =&gt; println!(&quot;User: {}&quot;, name),
+        None =&gt; println!(&quot;Not found&quot;),
+    }
+}</code></pre>
+</section>
+<section id="no-exceptions-resultt-e" class="slide level1">
+<h1>No Exceptions – <code>Result&lt;T, E&gt;</code></h1>
+<ul>
+<li>Rust does not have exceptions</li>
+<li>Errors are represented with <code>Result&lt;T, E&gt;</code></li>
+</ul>
+<pre class="rust"><code>fn divide(a: f64, b: f64) -&gt; Result&lt;f64, String&gt; {
+    if b == 0.0 {
+        Err(&quot;Cannot divide by zero&quot;.to_string())
+    } else {
+        Ok(a / b)
+    }
+}
+
+fn main() {
+    match divide(10.0, 2.0) {
+        Ok(v) =&gt; println!(&quot;Result = {}&quot;, v),
+        Err(e) =&gt; println!(&quot;Error: {}&quot;, e),
+    }
+}</code></pre>
+</section>
+<section id="why-it-matters" class="slide level1">
+<h1>Why It Matters</h1>
+<ul>
+<li><strong>Enums</strong> make <code>Option</code> and
+<code>Result</code> possible</li>
+<li><strong>No Null</strong> → forces you to handle “value may not
+exist”<br />
+</li>
+<li><strong>No Exceptions</strong> → error handling is explicit and
+type-checked<br />
+</li>
+<li><strong>Ownership model</strong> → prevents memory leaks, data
+races, dangling pointers</li>
+</ul>
+<p>✅ Result: <strong>Programs that don’t randomly crash at
+runtime</strong></p>
+</section>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/reveal.js@^5/dist/reveal.js"></script>
+  <script src="https://unpkg.com/reveal.js@^5/plugin/zoom/zoom.js"></script>
+
+  <script src="https://unpkg.com/reveal.js@^5/plugin/highlight/highlight.js"></script>
+
+  <script>
+
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        theme: "dark", // available themes are in /css/theme
+        transition: 'slide', // default/cube/page/concave/zoom/linear/fade/none
+        plugins: [RevealHighlight,RevealZoom],
+
+        // Optional libraries used to extend on reveal.js
+        // dependencies: [
+          // { src: 'https://unpkg.com/reveal.js@^5/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          // { src: 'https://unpkg.com/reveal.js@^5/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+          // { src: 'https://unpkg.com/reveal.js@^5/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+
+//          { src: 'https://unpkg.com/reveal.js@^5/plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; }, }
+//          { src: 'https://unpkg.com/reveal.js@^5/plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+// ]
+      });
+    </script>
+  </body>
+</html>

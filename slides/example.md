@@ -1,4 +1,9 @@
 # Each slide is its own level 1 heading
+
+![](../assets/rust-logo-blk.svg){width=318}
+
+## Sub heading = smaller title
+
 text goes here, image, whatever.
 
 1. ordered list

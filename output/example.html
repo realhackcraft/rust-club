@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <title>example</title>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^5/dist/reveal.css"/>
+    <style type="text/css">code{white-space: pre;}</style>
+    <link rel="stylesheet" href="https://unpkg.com/reveal.js@^5/dist/theme/black.css" id="theme">
+
+
+    <!-- For syntax highlighting using highlight.js-->
+    <link rel="stylesheet" href="./revealjs/highlight/atom-one-dark.css">
+
+  <!-- <link rel="stylesheet" media="print" href="https://unpkg.com/reveal.js@^5/css/print/pdf.css" /> -->
+  <!--[if lt IE 9]>
+  <script src="https://unpkg.com/reveal.js@^5/lib/js/html5shiv.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+
+<section>
+<section id="each-slide-is-its-own-level-1-heading"
+class="title-slide slide level1">
+<h1>Each slide is its own level 1 heading</h1>
+<p><img data-src="../assets/rust-logo-blk.svg" width="318" /></p>
+</section>
+<section id="sub-heading-smaller-title" class="slide level2">
+<h2>Sub heading = smaller title</h2>
+<p>text goes here, image, whatever.</p>
+<ol type="1">
+<li>ordered list</li>
+<li>number 2</li>
+<li>#3</li>
+</ol>
+</section></section>
+<section id="individually-reveal-list-items"
+class="title-slide slide level1">
+<h1>Individually reveal list items</h1>
+<ol type="1">
+<li class="fragment">like so</li>
+<li class="fragment">and this</li>
+</ol>
+<ul>
+<li class="fragment">unordered</li>
+<li class="fragment">also</li>
+<li class="fragment">work</li>
+</ul>
+</section>
+
+<section id="code-with-syntax-highlighting"
+class="title-slide slide level1">
+<h1>Code with syntax highlighting</h1>
+<pre class="rust"><code>fn main() {
+    println!(&quot;Hello, world!&quot;);
+}</code></pre>
+</section>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/reveal.js@^5/dist/reveal.js"></script>
+  <script src="https://unpkg.com/reveal.js@^5/plugin/zoom/zoom.js"></script>
+
+  <script src="https://unpkg.com/reveal.js@^5/plugin/highlight/highlight.js"></script>
+
+  <script>
+
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        theme: "dark", // available themes are in /css/theme
+        transition: 'slide', // default/cube/page/concave/zoom/linear/fade/none
+        plugins: [RevealHighlight,RevealZoom],
+
+        // Optional libraries used to extend on reveal.js
+        // dependencies: [
+          // { src: 'https://unpkg.com/reveal.js@^5/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          // { src: 'https://unpkg.com/reveal.js@^5/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+          // { src: 'https://unpkg.com/reveal.js@^5/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+
+//          { src: 'https://unpkg.com/reveal.js@^5/plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; }, }
+//          { src: 'https://unpkg.com/reveal.js@^5/plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+// ]
+      });
+    </script>
+  </body>
+</html>
